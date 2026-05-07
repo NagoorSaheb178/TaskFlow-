@@ -407,7 +407,7 @@ export default function ProjectsPage() {
                   <button
                     onClick={handleAddMember}
                     disabled={!selectedUserId || isAddingMember}
-                    className="bg-primary text-on-primary font-label-md px-4 py-2.5 rounded-xl flex items-center gap-1 active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-primary text-on-primary font-label-md px-4 py-2.5 rounded-xl flex items-center gap-1 active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
                   >
                     {isAddingMember ? (
                       <span className="material-symbols-outlined text-[18px] animate-spin">
