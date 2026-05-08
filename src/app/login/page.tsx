@@ -18,6 +18,9 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    // Start prefetching the dashboard to speed up the transition
+    router.prefetch("/");
+
     const res = await signIn("credentials", {
       redirect: false,
       email,
@@ -29,7 +32,9 @@ export default function LoginPage() {
       setLoading(false);
     } else {
       router.push("/");
-      router.refresh();
+      // router.refresh() is not strictly needed for navigation speed, 
+      // but if you want fresh data it's okay. 
+      // However, pushing is enough for the user to see the next page.
     }
   };
 
@@ -43,7 +48,7 @@ export default function LoginPage() {
 
       {/* Main Content Card Container */}
       <div className="w-full max-w-5xl z-10 flex flex-col lg:flex-row bg-surface-container-lowest lg:border lg:border-outline-variant lg:rounded-3xl lg:shadow-2xl lg:overflow-hidden rounded-2xl shadow-xl border border-outline-variant lg:h-[720px]">
-        
+
         {/* Side Image/Brand Section (Hidden on mobile) */}
         <div className="hidden lg:flex lg:w-1/2 bg-primary p-12 flex-col justify-between relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -69,13 +74,13 @@ export default function LoginPage() {
           <div className="z-10 flex items-center gap-stack-md text-on-primary/80">
             <div className="flex -space-x-3">
               <div className="w-10 h-10 rounded-full border-2 border-primary bg-surface-container-high overflow-hidden flex items-center justify-center">
-                 <span className="material-symbols-outlined text-[18px]">person</span>
+                <span className="material-symbols-outlined text-[18px]">person</span>
               </div>
               <div className="w-10 h-10 rounded-full border-2 border-primary bg-surface-container-high overflow-hidden flex items-center justify-center">
-                 <span className="material-symbols-outlined text-[18px]">person</span>
+                <span className="material-symbols-outlined text-[18px]">person</span>
               </div>
               <div className="w-10 h-10 rounded-full border-2 border-primary bg-surface-container-high overflow-hidden flex items-center justify-center">
-                 <span className="material-symbols-outlined text-[18px]">person</span>
+                <span className="material-symbols-outlined text-[18px]">person</span>
               </div>
             </div>
             <p className="text-body-sm font-medium">Trusted by 500+ global teams</p>
@@ -109,10 +114,10 @@ export default function LoginPage() {
                 <label className="text-label-md text-on-surface-variant ml-1 font-semibold" htmlFor="email">Email Address</label>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-[20px]">mail</span>
-                  <input 
-                    className="w-full h-14 pl-12 pr-4 bg-surface-container-low border border-outline-variant/60 rounded-xl text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-outline-variant" 
-                    id="email" 
-                    placeholder="name@company.com" 
+                  <input
+                    className="w-full h-14 pl-12 pr-4 bg-surface-container-low border border-outline-variant/60 rounded-xl text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-outline-variant"
+                    id="email"
+                    placeholder="name@company.com"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -128,17 +133,17 @@ export default function LoginPage() {
                 </div>
                 <div className="relative group">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-[20px]">lock</span>
-                  <input 
-                    className="w-full h-14 pl-12 pr-12 bg-surface-container-low border border-outline-variant/60 rounded-xl text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-outline-variant" 
-                    id="password" 
-                    placeholder="••••••••" 
+                  <input
+                    className="w-full h-14 pl-12 pr-12 bg-surface-container-low border border-outline-variant/60 rounded-xl text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-outline-variant"
+                    id="password"
+                    placeholder="••••••••"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <button 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant transition-colors" 
+                  <button
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant transition-colors"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                   >
@@ -148,12 +153,12 @@ export default function LoginPage() {
               </div>
 
               <div className="flex items-center space-x-3 pt-2">
-                <input className="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary cursor-pointer transition-colors" id="remember" type="checkbox"/>
+                <input className="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary cursor-pointer transition-colors" id="remember" type="checkbox" />
                 <label className="text-body-sm text-on-surface-variant select-none cursor-pointer font-medium" htmlFor="remember">Remember me for 30 days</label>
               </div>
 
-              <button 
-                className="w-full h-14 bg-primary text-on-primary font-bold text-[15px] rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-container hover:text-on-primary-container hover:shadow-xl active:scale-[0.98] transition-all duration-200 mt-stack-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" 
+              <button
+                className="w-full h-14 bg-primary text-on-primary font-bold text-[15px] rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-container hover:text-on-primary-container hover:shadow-xl active:scale-[0.98] transition-all duration-200 mt-stack-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
                 disabled={loading}
               >
@@ -164,7 +169,7 @@ export default function LoginPage() {
 
             <div className="text-center pt-8">
               <p className="text-body-md text-on-surface-variant">
-                Don't have an account? 
+                Don't have an account?
                 <Link className="text-primary font-bold hover:underline ml-1" href="/signup">Sign up for free</Link>
               </p>
             </div>
