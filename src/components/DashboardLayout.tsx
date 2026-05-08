@@ -114,6 +114,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="material-symbols-outlined">notifications</span>
               <span className="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
             </button>
+            {/* Mobile Sign Out */}
+            <button 
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="lg:hidden text-error hover:bg-error-container/20 p-2 rounded-full active:scale-95 transition-all"
+              title="Sign Out"
+            >
+              <span className="material-symbols-outlined">logout</span>
+            </button>
           </div>
         </header>
 
