@@ -390,11 +390,11 @@ export default function ProjectsPage() {
 
               <div className="p-6">
                 {/* Add Member Row */}
-                <div className="flex gap-2 mb-2">
+                <div className="grid grid-cols-[1fr,auto] gap-3 mb-6">
                   <select
                     value={selectedUserId}
                     onChange={(e) => setSelectedUserId(e.target.value)}
-                    className="flex-1 px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:border-primary outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:border-primary outline-none text-body-md"
                     disabled={isAddingMember}
                   >
                     <option value="">Select User to Add</option>
@@ -407,16 +407,16 @@ export default function ProjectsPage() {
                   <button
                     onClick={handleAddMember}
                     disabled={!selectedUserId || isAddingMember}
-                    className="bg-primary text-on-primary font-label-md px-4 py-2.5 rounded-xl flex items-center gap-1 active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                    className="bg-primary text-on-primary px-6 py-2.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed min-w-[100px]"
                   >
                     {isAddingMember ? (
-                      <span className="material-symbols-outlined text-[18px] animate-spin">
+                      <span className="material-symbols-outlined text-[20px] animate-spin">
                         progress_activity
                       </span>
                     ) : (
-                      <span className="material-symbols-outlined text-[18px]">add</span>
+                      <span className="material-symbols-outlined text-[20px]">person_add</span>
                     )}
-                    {isAddingMember ? "Adding..." : "Add"}
+                    <span className="font-label-md">{isAddingMember ? "Adding..." : "Add"}</span>
                   </button>
                 </div>
 
