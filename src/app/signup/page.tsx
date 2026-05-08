@@ -164,7 +164,6 @@ export default function SignupPage() {
                       >
                         <option value="Admin">Admin</option>
                         <option value="Member">Member</option>
-                        <option value="Viewer">Viewer</option>
                       </select>
                       <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
                     </div>
