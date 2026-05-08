@@ -66,29 +66,38 @@ export default function TasksPage() {
     setFormError("");
     if (!newTask.title.trim() || !newTask.project) return setFormError("Title and Project are required.");
 
+    // Optimistic close and reset
+    setShowModal(false);
+    const taskDraft = { ...newTask };
+    setNewTask({ title: "", description: "", project: "", assignee: "", priority: "Medium", dueDate: "" });
+
     const res = await fetch("/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTask),
+      body: JSON.stringify(taskDraft),
     });
 
     if (res.ok) {
-      setShowModal(false);
-      setNewTask({ title: "", description: "", project: "", assignee: "", priority: "Medium", dueDate: "" });
       fetchTasks();
     } else {
       const data = await res.json();
       setFormError(data.message || "Failed to create task.");
+      setShowModal(true); // Re-open on error
     }
   };
 
   const handleStatusChange = async (taskId: string, status: string) => {
+    // Optimistically update the status locally
+    setTasks(prev => prev.map(t => t._id === taskId ? { ...t, status: status as any } : t));
+
     await fetch(`/api/tasks/${taskId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
-    fetchTasks();
+    // No need to fetchTasks() again if we update state optimistically, 
+    // unless we want to sync complex server logic. 
+    // fetchTasks(); 
   };
 
   const handleDelete = async (taskId: string) => {
@@ -111,7 +120,13 @@ export default function TasksPage() {
             </span>
           </div>
           {status === "To Do" && isAdmin && (
-            <button onClick={() => setShowModal(true)} className="material-symbols-outlined text-on-surface-variant hover:bg-surface-container p-1 rounded">add</button>
+            <button 
+              onClick={() => setShowModal(true)} 
+              className="w-8 h-8 flex items-center justify-center bg-primary-container text-on-primary-container rounded-lg hover:bg-primary hover:text-on-primary transition-all active:scale-90 shadow-sm"
+              title="Add task to this column"
+            >
+              <span className="material-symbols-outlined text-[20px]">add</span>
+            </button>
           )}
         </div>
 
