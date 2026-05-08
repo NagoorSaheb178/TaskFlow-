@@ -202,14 +202,14 @@ export default function TasksPage() {
       </section>
 
       {/* Kanban Board Container */}
-      <div className="flex-1 flex flex-row lg:grid lg:grid-cols-3 gap-4 overflow-x-auto snap-x snap-mandatory pb-12 -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth hide-scrollbar lg:overflow-x-visible">
-        <div className="min-w-[85vw] lg:min-w-0 snap-center">
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:gap-gutter pb-12">
+        <div className="flex-1 min-w-0">
           {renderColumn("To Do", "To Do", "border-outline-variant", "bg-primary")}
         </div>
-        <div className="min-w-[85vw] lg:min-w-0 snap-center">
+        <div className="flex-1 min-w-0">
           {renderColumn("In Progress", "In Progress", "border-primary ring-1 ring-primary", "bg-tertiary-container")}
         </div>
-        <div className="min-w-[85vw] lg:min-w-0 snap-center">
+        <div className="flex-1 min-w-0">
           {renderColumn("Done", "Done", "border-outline-variant", "bg-secondary")}
         </div>
       </div>
