@@ -83,23 +83,29 @@ export default function ProjectsPage() {
     setIsCreating(true);
     setCreateError("");
 
+    // Optimistic close and clear
+    setShowCreateModal(false);
+    const projectDraft = { ...newProject };
+    setNewProject({ name: "", description: "" });
+
     try {
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProject),
+        body: JSON.stringify(projectDraft),
       });
 
       if (res.ok) {
-        setShowCreateModal(false);
-        setNewProject({ name: "", description: "" });
+        // Fast refresh - we could also manually append to state here for even more speed
         fetchProjects();
       } else {
         const err = await res.json().catch(() => ({}));
         setCreateError(err.message || "Failed to create project. Please try again.");
+        setShowCreateModal(true); // Re-open on error
       }
     } catch (err) {
       setCreateError("Network error. Please try again.");
+      setShowCreateModal(true);
     } finally {
       setIsCreating(false);
     }
@@ -121,8 +127,11 @@ export default function ProjectsPage() {
       if (res.ok) {
         const updatedProject = await res.json();
         setCurrentProject(updatedProject);
-        setSelectedUserId(""); // Clear selection after successful add
-        fetchProjects();
+        
+        // Optimistically update the main projects list too
+        setProjects(prev => prev.map(p => p._id === updatedProject._id ? updatedProject : p));
+        
+        setSelectedUserId(""); 
       } else {
         const err = await res.json().catch(() => ({}));
         setMemberError(err.message || "Failed to add member. Please try again.");
