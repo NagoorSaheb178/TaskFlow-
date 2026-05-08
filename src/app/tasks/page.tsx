@@ -118,15 +118,6 @@ export default function TasksPage() {
             <span className="bg-surface-container-high px-2 py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant">
               {columnTasks.length}
             </span>
-            {status === "To Do" && isAdmin && (
-              <button 
-                onClick={() => setShowModal(true)} 
-                className="w-8 h-8 flex items-center justify-center bg-primary-container text-on-primary-container rounded-lg hover:bg-primary hover:text-on-primary transition-all active:scale-90 shadow-sm ml-1"
-                title="Add task to this column"
-              >
-                <span className="material-symbols-outlined text-[20px]">add</span>
-              </button>
-            )}
           </div>
         </div>
 
