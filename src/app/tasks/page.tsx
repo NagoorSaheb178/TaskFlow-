@@ -211,10 +211,16 @@ export default function TasksPage() {
       </section>
 
       {/* Kanban Board Container */}
-      <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-gutter overflow-x-hidden md:overflow-x-visible snap-x snap-mandatory hide-scrollbar md:snap-none min-h-[500px] lg:min-h-0 pb-12 -mx-4 px-4 lg:mx-0 lg:px-0">
-        {renderColumn("To Do", "To Do", "border-outline-variant", "bg-primary")}
-        {renderColumn("In Progress", "In Progress", "border-primary ring-1 ring-primary", "bg-tertiary-container")}
-        {renderColumn("Done", "Done", "border-outline-variant", "bg-secondary")}
+      <div className="flex-1 flex flex-row gap-4 overflow-x-auto snap-x snap-mandatory pb-12 -mx-4 px-4 scroll-smooth hide-scrollbar lg:overflow-x-visible">
+        <div className="min-w-[85vw] md:min-w-[320px] snap-center">
+          {renderColumn("To Do", "To Do", "border-outline-variant", "bg-primary")}
+        </div>
+        <div className="min-w-[85vw] md:min-w-[320px] snap-center">
+          {renderColumn("In Progress", "In Progress", "border-primary ring-1 ring-primary", "bg-tertiary-container")}
+        </div>
+        <div className="min-w-[85vw] md:min-w-[320px] snap-center">
+          {renderColumn("Done", "Done", "border-outline-variant", "bg-secondary")}
+        </div>
       </div>
 
       {/* Mobile FAB */}
