@@ -26,11 +26,19 @@ export async function GET() {
       return NextResponse.json({ message: "Session missing user ID. Please log in again." }, { status: 401 });
     }
 
-    // Use proper ObjectId for comparison — string comparison fails silently
+    // Use proper ObjectId for comparison
     const userObjectId = new mongoose.Types.ObjectId(userId);
 
-    // Admin sees all tasks; Member only sees tasks assigned to them
-    const query = role === "Admin" ? {} : { assignee: userObjectId };
+    let query = {};
+    if (role === "Admin") {
+      // Admin sees tasks only from projects they created
+      const userProjects = await Project.find({ createdBy: userObjectId }).select("_id");
+      const projectIds = userProjects.map(p => p._id);
+      query = { project: { $in: projectIds } };
+    } else {
+      // Member only sees tasks assigned to them
+      query = { assignee: userObjectId };
+    }
 
     const tasks = await Task.find(query)
       .sort({ createdAt: -1 })
