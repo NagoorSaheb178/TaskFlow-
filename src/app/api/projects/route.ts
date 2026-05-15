@@ -36,7 +36,7 @@ export async function GET() {
 
     // Admin sees all projects, Member sees only projects they are a member of
     const userObjectId = new mongoose.Types.ObjectId(userId);
-    const query = role === "Admin" ? {} : { members: userObjectId };
+    const query = role === "Admin" ? { createdBy: userObjectId } : { members: userObjectId };
 
     const projects = await Project.find(query)
       .populate("createdBy", "name email")
